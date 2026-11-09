@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – LibraLink</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===================== Login Container ===================== -->
+    <div class="login-container">
+        <div class="login-card">
+
+            <!-- ---- Login Header ---- -->
+            <div class="login-header">
+                <div class="login-header-icon">📚</div>
+                <h1>Welcome to LibraLink</h1>
+                <p>Sign in to manage your interlibrary borrowing</p>
+            </div>
+
+            <!-- ---- Login Body ---- -->
+            <div class="login-body">
+
+                <!-- Role Selector: three role buttons, first active by default -->
+                <div class="role-selector">
+                    <button class="role-btn active" data-role="student">
+                        <span class="role-btn-icon">🎓</span>
+                        <span class="role-btn-label">Student / Requester</span>
+                    </button>
+                    <button class="role-btn" data-role="librarian">
+                        <span class="role-btn-icon">🏛️</span>
+                        <span class="role-btn-label">Library Staff</span>
+                    </button>
+                    <button class="role-btn" data-role="admin">
+                        <span class="role-btn-icon">⚙️</span>
+                        <span class="role-btn-label">Administrator</span>
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email" class="form-label">Email Address</label>
+                        <input
+                            type="email"
+                            id="login-email"
+                            class="form-input"
+                            placeholder="Enter your email"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="login-password"
+                            class="form-input"
+                            placeholder="Enter your password"
+                            required
+                        />
+                    </div>
+
+                    <!-- Error message (hidden by default) -->
+                    <div id="login-error" class="login-error" style="display: none;">
+                        Invalid email, password, or role selection. Please try again.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full btn-lg">Sign In →</button>
+                </form>
+
+                <!-- Demo Credentials -->
+                <div class="demo-credentials">
+                    <h4>🔑 Demo Credentials</h4>
+                    <div id="demo-credentials-info">
+                        <!-- Populated dynamically based on selected role -->
+                    </div>
+                </div>
+
+            </div><!-- /.login-body -->
+
+            <!-- ---- Login Footer ---- -->
+            <div class="login-footer">
+                <a href="index.html">← Back to Home</a>
+            </div>
+
+        </div><!-- /.login-card -->
+    </div><!-- /.login-container -->
+
+    <!-- ===================== Scripts ===================== -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        /* =============================================================
+           Login Page JavaScript
+           - Role selector toggling & credential display
+           - Form submission with authentication
+           - Auto-redirect for already-logged-in users
+           - Pre-fill fields on role selection
+           ============================================================= */
+
+        // ---- Demo credentials for each role ----
+        var demoCredentials = {
+            student: {
+                email: 'alex.johnson@university.edu',
+                password: 'student123',
+                label: 'Student'
+            },
+            librarian: {
+                email: 'sarah.lib@westside.edu',
+                password: 'library123',
+                label: 'Library Staff'
+            },
+            admin: {
+                email: 'admin@libralink.edu',
+                password: 'admin123',
+                label: 'Administrator'
+            }
+        };
+
+        // DOM element references
+        var roleBtns = document.querySelectorAll('.role-btn');
+        var loginForm = document.getElementById('login-form');
+        var emailInput = document.getElementById('login-email');
+        var passwordInput = document.getElementById('login-password');
+        var loginError = document.getElementById('login-error');
+        var demoCredentialsInfo = document.getElementById('demo-credentials-info');
+
+        // ---- Check if user is already logged in ----
+        // If so, redirect them to the appropriate dashboard
+        if (typeof StorageManager !== 'undefined') {
+            var currentUser = StorageManager.getCurrentUser();
+            if (currentUser) {
+                // Use getRedirectUrl if available, otherwise redirect based on role
+                if (typeof getRedirectUrl === 'function') {
+                    window.location.href = getRedirectUrl(currentUser.role);
+                }
+            }
+        }
+
+        /**
+         * Returns the currently selected role from the role-selector buttons.
+         * @returns {string} The data-role value of the active button.
+         */
+        function getSelectedRole() {
+            var activeBtn = document.querySelector('.role-btn.active');
+            return activeBtn ? activeBtn.getAttribute('data-role') : 'student';
+        }
+
+        /**
+         * Updates the demo credentials display and pre-fills the login form
+         * based on the currently selected role.
+         */
+        function updateDemoCredentials() {
+            var role = getSelectedRole();
+            var creds = demoCredentials[role];
+
+            // Update the demo credentials info section
+            demoCredentialsInfo.innerHTML =
+                '<p><strong>' + creds.label + ' Account:</strong></p>' +
+                '<p>Email: <code>' + creds.email + '</code></p>' +
+                '<p>Password: <code>' + creds.password + '</code></p>';
+
+            // Pre-fill the email and password fields for convenience
+            emailInput.value = creds.email;
+            passwordInput.value = creds.password;
+
+            // Hide any previous error message when switching roles
+            loginError.style.display = 'none';
+        }
+
+        // ---- Role Selector Click Handlers ----
+        // Clicking a role button makes it active and updates credentials
+        roleBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                // Remove active class from all role buttons
+                roleBtns.forEach(function (b) {
+                    b.classList.remove('active');
+                });
+                // Add active class to the clicked button
+                this.classList.add('active');
+
+                // Update displayed credentials and pre-fill form
+                updateDemoCredentials();
+            });
+        });
+
+        // ---- Initialize demo credentials on page load ----
+        updateDemoCredentials();
+
+        // ---- Login Form Submission ----
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var email = emailInput.value.trim();
+            var password = passwordInput.value.trim();
+            var role = getSelectedRole();
+
+            // Hide any previous error
+            loginError.style.display = 'none';
+
+            // Attempt login using the auth module
+            if (typeof login === 'function') {
+                var success = login(email, password, role);
+
+                if (success) {
+                    // Redirect to the appropriate dashboard for the role
+                    if (typeof getRedirectUrl === 'function') {
+                        window.location.href = getRedirectUrl(role);
+                    } else {
+                        // Fallback redirect paths
+                        var redirectMap = {
+                            student: 'student/dashboard.html',
+                            librarian: 'librarian/dashboard.html',
+                            admin: 'admin/dashboard.html'
+                        };
+                        window.location.href = redirectMap[role] || 'index.html';
+                    }
+                } else {
+                    // Show error message on failed login
+                    loginError.style.display = 'block';
+                }
+            } else {
+                // auth.js not loaded — show error
+                loginError.textContent = 'Authentication system not available. Please try again later.';
+                loginError.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>

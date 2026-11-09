@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard – LibraLink</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar"></aside>
+        <main class="main-content">
+            <header class="top-bar" id="topBar"></header>
+            <div class="content-body" id="contentBody">
+                <!-- Dashboard content rendered by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <div class="notification" id="notification"></div>
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        /**
+         * Dashboard Page Script
+         * Displays welcome section, statistics, quick actions,
+         * recent activity, and upcoming due dates for the current student.
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            /* Initialize the app shell (sidebar + topbar) */
+            const user = initApp('dashboard', 'Dashboard');
+            if (!user) return;
+
+            /* ── Gather the current user's requests ── */
+            const allRequests  = StorageManager.getRequests();
+            const myRequests   = allRequests.filter(r => r.requesterId === user.id);
+
+            /* ── Compute statistics dynamically ── */
+            const totalCount    = myRequests.length;
+            const pendingCount  = myRequests.filter(r => r.approvalStatus === 'pending').length;
+            const approvedCount = myRequests.filter(r => r.approvalStatus === 'approved').length;
+            const rejectedCount = myRequests.filter(r => r.approvalStatus === 'rejected').length;
+
+            /* ── Recent activity: last 5 requests (newest first) ── */
+            const recentRequests = [...myRequests]
+                .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate))
+                .slice(0, 5);
+
+            /* ── Upcoming due dates: approved, not yet returned, has dueDate ── */
+            const upcomingDue = myRequests
+                .filter(r =>
+                    r.approvalStatus === 'approved' &&
+                    r.dueDate &&
+                    r.returnStatus === 'not_returned'
+                )
+                .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+            /* ── Build recent activity list HTML ── */
+            let recentActivityHTML = '';
+            if (recentRequests.length === 0) {
+                recentActivityHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3 class="empty-state-title">No Activity Yet</h3>
+                        <p class="empty-state-text">You haven't made any borrowing requests yet.</p>
+                    </div>`;
+            } else {
+                recentActivityHTML = '<div class="activity-list">';
+                recentRequests.forEach(function(req) {
+                    /* Determine icon color based on approval status */
+                    let iconColor = '#f59e0b'; /* yellow / pending */
+                    let iconSymbol = '⏳';
+                    if (req.approvalStatus === 'approved') {
+                        iconColor = '#10b981'; /* green */
+                        iconSymbol = '✅';
+                    } else if (req.approvalStatus === 'rejected') {
+                        iconColor = '#ef4444'; /* red */
+                        iconSymbol = '❌';
+                    }
+
+                    recentActivityHTML += `
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background:${iconColor};">${iconSymbol}</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Requested '${req.bookTitle}' from ${req.sourceLibraryName}</div>
+                                <div class="activity-time">
+                                    ${formatDate(req.requestDate)} ${getStatusBadge(req.approvalStatus, 'approval')}
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                recentActivityHTML += '</div>';
+            }
+
+            /* ── Build upcoming due dates HTML ── */
+            let dueDatesHTML = '';
+            if (upcomingDue.length === 0) {
+                dueDatesHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <h3 class="empty-state-title">All Clear</h3>
+                        <p class="empty-state-text">No upcoming due dates</p>
+                    </div>`;
+            } else {
+                dueDatesHTML = '<div class="activity-list">';
+                upcomingDue.forEach(function(req) {
+                    /* Highlight if due date is within 3 days */
+                    const daysLeft = Math.ceil(
+                        (new Date(req.dueDate) - new Date()) / (1000 * 60 * 60 * 24)
+                    );
+                    const urgentStyle = daysLeft <= 3
+                        ? 'color:#ef4444;font-weight:600;'
+                        : '';
+
+                    dueDatesHTML += `
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background:#3b82f6;">📖</div>
+                            <div class="activity-content">
+                                <div class="activity-title">${req.bookTitle}</div>
+                                <div class="activity-time">
+                                    ${req.sourceLibraryName} &middot;
+                                    <span style="${urgentStyle}">Due: ${formatDate(req.dueDate)}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                dueDatesHTML += '</div>';
+            }
+
+            /* ── Render the full dashboard layout ── */
+            const contentBody = document.getElementById('contentBody');
+            contentBody.innerHTML = `
+                <!-- Welcome Section -->
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Welcome back, ${user.name}! 👋</h1>
+                        <p class="page-subtitle">Here's an overview of your borrowing activity</p>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">📊</div>
+                        <div class="stat-info">
+                            <div class="stat-number">${totalCount}</div>
+                            <div class="stat-label">Total Requests</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">⏳</div>
+                        <div class="stat-info">
+                            <div class="stat-number">${pendingCount}</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-info">
+                            <div class="stat-number">${approvedCount}</div>
+                            <div class="stat-label">Approved</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">❌</div>
+                        <div class="stat-info">
+                            <div class="stat-number">${rejectedCount}</div>
+                            <div class="stat-label">Rejected</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <a href="books.html" class="quick-action-btn">
+                        <div class="quick-action-icon">🔍</div>
+                        <div class="quick-action-text">Search Books</div>
+                    </a>
+                    <a href="borrow-request.html" class="quick-action-btn">
+                        <div class="quick-action-icon">✏️</div>
+                        <div class="quick-action-text">Request a Book</div>
+                    </a>
+                    <a href="my-requests.html" class="quick-action-btn">
+                        <div class="quick-action-icon">📋</div>
+                        <div class="quick-action-text">View My Requests</div>
+                    </a>
+                </div>
+
+                <!-- Two-column layout: Recent Activity + Upcoming Due Dates -->
+                <div class="dashboard-activity-grid mt-3">
+                    <!-- Left column – Recent Activity (wider) -->
+                    <div style="flex:2;min-width:0;">
+                        <div class="card">
+                            <div class="card-header">Recent Activity</div>
+                            <div class="card-body">
+                                ${recentActivityHTML}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right column – Upcoming Due Dates -->
+                    <div style="flex:1;min-width:0;">
+                        <div class="card">
+                            <div class="card-header">Upcoming Due Dates</div>
+                            <div class="card-body">
+                                ${dueDatesHTML}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibraLink – Connecting Libraries. Expanding Access to Knowledge.</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===================== Navigation Bar ===================== -->
+    <nav class="landing-nav">
+        <div class="container">
+            <!-- Brand logo with icon -->
+            <a href="index.html" class="landing-brand">
+                <span class="landing-brand-icon">📚</span>
+                <span class="landing-brand-text">LibraLink</span>
+            </a>
+
+            <!-- Mobile hamburger menu toggle button (hidden on desktop) -->
+            <button class="landing-menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navigation links -->
+            <ul class="landing-nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#libraries">Libraries</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="login.html" class="btn btn-primary">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===================== Hero Section ===================== -->
+    <section class="hero-section" id="hero">
+        <div class="container">
+            <!-- Left column: headline, description, CTA buttons -->
+            <div class="hero-content">
+                <h1>One Library Is <span>Never Enough</span>.</h1>
+                <p>Discover books across multiple libraries, request what you need, and track every borrowing journey in one place.</p>
+                <div class="hero-buttons">
+                    <a href="books.html" class="btn btn-primary btn-lg">📚 Explore Books</a>
+                    <a href="login.html" class="btn btn-secondary btn-lg">🚀 Get Started</a>
+                </div>
+            </div>
+
+            <!-- Right column: CSS-only hero illustration -->
+            <div class="hero-visual">
+                <div class="hero-illustration">
+                    <!-- Floating emoji icons animated with CSS -->
+                    <span class="floating-icon floating-icon-1">📖</span>
+                    <span class="floating-icon floating-icon-2">📚</span>
+                    <span class="floating-icon floating-icon-3">🔍</span>
+                    <span class="floating-icon floating-icon-4">🏛️</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== Book Search Section ===================== -->
+    <section class="section" id="search" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title">Find Your Next Read</h2>
+            <p class="section-subtitle">Search across our network of partner libraries</p>
+
+            <!-- Search bar form -->
+            <form class="landing-search-form" id="landing-search-form">
+                <div class="landing-search-bar">
+                    <input
+                        type="text"
+                        id="landing-search-input"
+                        class="landing-search-input"
+                        placeholder="Search by title, author, or ISBN..."
+                    />
+                    <button type="submit" class="btn btn-primary landing-search-btn">🔍 Search</button>
+                </div>
+            </form>
+
+            <!-- Category quick-filter buttons -->
+            <div class="landing-categories">
+                <a href="books.html?category=Computer Science" class="category-btn">💻 Computer Science</a>
+                <a href="books.html?category=Literature" class="category-btn">📖 Literature</a>
+                <a href="books.html?category=Mathematics" class="category-btn">🔢 Mathematics</a>
+                <a href="books.html?category=Physics" class="category-btn">⚛️ Physics</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== About LibraLink Section ===================== -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About LibraLink</h2>
+            <p class="section-subtitle">Bridging the gap between libraries and knowledge seekers</p>
+
+            <div class="about-grid">
+                <!-- Left: Large styled icon/illustration -->
+                <div class="about-illustration">
+                    <div class="about-icon-box">
+                        <span>🏛️</span>
+                    </div>
+                </div>
+
+                <!-- Right: Descriptive paragraphs -->
+                <div class="about-text">
+                    <p>LibraLink is an innovative interlibrary borrowing management system designed to connect students and researchers with the books they need, regardless of which library holds them.</p>
+                    <p>Our platform streamlines the entire borrowing process — from discovering available titles across partner libraries to submitting requests, tracking shipments, and managing returns.</p>
+                    <p>Whether you're a student looking for a rare textbook or a library managing incoming requests, LibraLink makes interlibrary borrowing simple and efficient.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== How It Works Section ===================== -->
+    <section class="section" id="how-it-works" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Four simple steps to borrow from any partner library</p>
+
+            <div class="how-it-works">
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🔍</div>
+                    <h3>Search</h3>
+                    <p>Browse our catalog of books across all partner libraries.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">📝</div>
+                    <h3>Request</h3>
+                    <p>Submit a borrowing request with your preferred source library.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">📦</div>
+                    <h3>Track</h3>
+                    <p>Monitor your request's approval and shipment status in real-time.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">✅</div>
+                    <h3>Return</h3>
+                    <p>Return the book when done and complete the borrowing cycle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== Platform Features Section ===================== -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">Platform Features</h2>
+            <p class="section-subtitle">Everything you need for seamless interlibrary borrowing</p>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Book Discovery</h3>
+                    <p>Search and browse books across multiple partner libraries from one unified catalog.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Request Management</h3>
+                    <p>Submit, track, and manage borrowing requests with a streamlined workflow.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Approval Workflow</h3>
+                    <p>Library staff can review, approve, or reject requests with detailed information.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Shipment Tracking</h3>
+                    <p>Real-time tracking of book shipments from dispatch to delivery.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Due Date Management</h3>
+                    <p>Automatic due date assignment and reminders for timely returns.</p>
+                </div>
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Return Processing</h3>
+                    <p>Complete return tracking to close the borrowing loop efficiently.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== Partner Libraries Section ===================== -->
+    <section class="section" id="libraries" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title">Our Partner Libraries</h2>
+            <p class="section-subtitle">A growing network of knowledge institutions</p>
+
+            <div class="libraries-grid">
+                <!-- Library 1 -->
+                <div class="library-card">
+                    <div class="library-icon">🏛️</div>
+                    <h3>Central University Library</h3>
+                    <p>Academic City</p>
+                </div>
+                <!-- Library 2 -->
+                <div class="library-card">
+                    <div class="library-icon">📖</div>
+                    <h3>Westside Community Library</h3>
+                    <p>Westside District</p>
+                </div>
+                <!-- Library 3 -->
+                <div class="library-card">
+                    <div class="library-icon">🔬</div>
+                    <h3>Eastgate Research Library</h3>
+                    <p>Eastgate Campus</p>
+                </div>
+                <!-- Library 4 -->
+                <div class="library-card">
+                    <div class="library-icon">📚</div>
+                    <h3>Northfield Public Library</h3>
+                    <p>Northfield Town</p>
+                </div>
+                <!-- Library 5 -->
+                <div class="library-card">
+                    <div class="library-icon">💻</div>
+                    <h3>Southbank Digital Library</h3>
+                    <p>Southbank Center</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== Call-to-Action Section ===================== -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Expand Your Library Access?</h2>
+            <p>Join LibraLink today and discover books across our network of partner libraries.</p>
+            <a href="login.html" class="btn btn-cta">Get Started Now →</a>
+        </div>
+    </section>
+
+    <!-- ===================== Footer ===================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand -->
+                <div class="footer-brand">
+                    <h3>📚 LibraLink</h3>
+                    <p>Connecting libraries and expanding access to knowledge for students and researchers everywhere.</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="books.html">Browse Books</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="login.html">Get Started</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Resources -->
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#libraries">Partner Libraries</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>📧 info@libralink.edu</li>
+                        <li>📞 (555) 000-1234</li>
+                        <li>📍 University District</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="footer-bottom">
+                <p>© 2024 LibraLink. All rights reserved. | Connecting Libraries. Expanding Access to Knowledge.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== Scripts ===================== -->
+    <script src="js/storage.js"></script>
+    <script>
+        /* =============================================================
+           Landing Page JavaScript
+           - Search form submission & category filters
+           - Mobile navigation toggle
+           - Smooth scrolling for anchor links
+           ============================================================= */
+
+        // ---- Search Form Submission ----
+        // Redirects to books.html with the search term as a query parameter
+        var searchForm = document.getElementById('landing-search-form');
+        if (searchForm) {
+            searchForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var query = document.getElementById('landing-search-input').value.trim();
+                if (query) {
+                    window.location.href = 'books.html?search=' + encodeURIComponent(query);
+                }
+            });
+        }
+
+        // ---- Category Quick Filters ----
+        // Each category button already has an href; no extra JS needed.
+        // But we add click handlers in case we want to prevent default and
+        // build the URL dynamically in the future.
+        var categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                // Allow default navigation via href
+                // This handler is here for potential future enhancements
+            });
+        });
+
+        // ---- Mobile Navigation Toggle ----
+        // Shows/hides the nav links on smaller screens
+        var menuToggle = document.querySelector('.landing-menu-toggle');
+        var navLinks = document.querySelector('.landing-nav-links');
+
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', function () {
+                // Toggle the "active" class on both the button and the nav list
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close the mobile menu when a nav link is clicked
+            navLinks.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    navLinks.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                });
+            });
+        }
+
+        // ---- Smooth Scrolling for Anchor Links ----
+        // Scrolls smoothly to the target section when clicking in-page links
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                var targetId = this.getAttribute('href');
+                // Skip if it's just "#" with no id
+                if (targetId === '#') return;
+
+                var targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    // Calculate offset to account for the fixed navbar height
+                    var navHeight = document.querySelector('.landing-nav').offsetHeight;
+                    var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ---- Active Nav Link Highlight on Scroll ----
+        // Highlights the current section's nav link as the user scrolls
+        window.addEventListener('scroll', function () {
+            var sections = document.querySelectorAll('section[id]');
+            var navHeight = document.querySelector('.landing-nav').offsetHeight;
+            var scrollPos = window.pageYOffset + navHeight + 50;
+
+            sections.forEach(function (section) {
+                var sectionTop = section.offsetTop;
+                var sectionHeight = section.offsetHeight;
+                var sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    // Remove active class from all links
+                    document.querySelectorAll('.landing-nav-links a').forEach(function (link) {
+                        link.classList.remove('active');
+                    });
+                    // Add active class to matching link
+                    var activeLink = document.querySelector('.landing-nav-links a[href="#' + sectionId + '"]');
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
