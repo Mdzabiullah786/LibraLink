@@ -1,13 +1,4 @@
-/* ==========================================================================
-   LibraLink Design System — Complete CSS
-   A single, comprehensive stylesheet for the entire LibraLink application.
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. CSS Custom Properties (Design Tokens)
-   All colors, shadows, radii, and transitions are defined here so that
-   changing one value updates the whole application consistently.
-   -------------------------------------------------------------------------- */
+/* here i am going to use comment out for heading of each change for my convenience while reading. */
 :root {
   /* Primary palette */
   --primary: #1e3a5f;
@@ -56,11 +47,6 @@
   /* Transition */
   --transition: all 0.2s ease;
 }
-
-/* --------------------------------------------------------------------------
-   2. Reset & Base Styles
-   Normalize browser defaults so every element starts from the same baseline.
-   -------------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -765,6 +751,7 @@ button, input, select, textarea {
   margin-bottom: 4px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

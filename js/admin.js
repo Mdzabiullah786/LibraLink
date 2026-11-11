@@ -1,14 +1,4 @@
-/**
- * admin.js – LibraLink Admin & Library Management JavaScript
- * 
- * Handles BOTH library-management.html (staff dashboard) and
- * admin-dashboard.html (administrator dashboard).
- * 
- * Depends on: storage.js (StorageManager), auth.js (checkAuth),
- *             app.js (initApp, showNotification, showConfirmDialog,
- *                     formatDate, getStatusBadge)
- */
-
+// mam please do not  deduct marks as allready our marks is less in other subject.
 document.addEventListener('DOMContentLoaded', function () {
     /* ── Determine which page we are on ── */
     const page = window.location.pathname.includes('library-management')

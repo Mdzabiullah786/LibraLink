@@ -1,30 +1,4 @@
-/**
- * ============================================================
- * LibraLink - Common Application Utilities (app.js)
- * ============================================================
- * Shared UI helpers used across every protected page:
- *   - Sidebar navigation (role-aware)
- *   - Top bar with page title & hamburger menu
- *   - Toast notifications
- *   - Confirmation dialogs
- *   - Date formatting & status badges
- *   - Mobile sidebar toggle
- *   - One-call page initialisation via initApp()
- *
- * Depends on: storage.js, auth.js (must be loaded first)
- * ============================================================
- */
-
-/* ==========================================================
- * createSidebar(activePage)
- * ==========================================================
- * Dynamically builds the sidebar navigation based on the
- * current user's role and injects it into #sidebar.
- *
- * @param {string} activePage - Identifier of the current page
- *   ('dashboard', 'books', 'book-details', 'borrow-request',
- *    'my-requests', 'library-management', 'admin-dashboard')
- * ======================================================== */
+// sorry mam i have taken help of ai as you know i have not learn java script yet .
 function createSidebar(activePage) {
     const user = StorageManager.getCurrentUser();
     if (!user) return; // No session – nothing to render
